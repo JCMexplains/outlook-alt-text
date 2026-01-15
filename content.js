@@ -9,22 +9,6 @@
   // Listen for paste events on the entire document
   document.addEventListener('paste', handlePaste, true);
 
-  // Also observe DOM for images added through other means
-  const observer = new MutationObserver(mutations => {
-    for (const mutation of mutations) {
-      for (const node of mutation.addedNodes) {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          checkForNewImages(node);
-        }
-      }
-    }
-  });
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-
   function handlePaste(event) {
     // Check if we're in a compose area
     const target = event.target;
@@ -43,42 +27,44 @@
       if (item.type.startsWith('image/')) {
         const blob = item.getAsFile();
         if (blob) {
-          // Wait a moment for the image to be inserted into DOM
-          setTimeout(() => findAndProcessNewImage(target), 100);
+          // Watch for the image to appear in the editable area
+          watchForPastedImage(target);
         }
         break;
       }
     }
   }
 
-  function checkForNewImages(element) {
-    // Check if element is an image without alt text
-    if (element.tagName === 'IMG' && !element.alt && !element.dataset.altTextProcessed) {
-      processImage(element);
-    }
+  function watchForPastedImage(target) {
+    const editableArea = target.closest('[contenteditable="true"]') || target;
 
-    // Check children
-    const images = element.querySelectorAll?.('img:not([data-alt-text-processed])');
-    if (images) {
-      for (const img of images) {
-        if (!img.alt) {
-          processImage(img);
+    // Take a snapshot of current images
+    const existingImages = new Set();
+    editableArea.querySelectorAll('img').forEach(img => existingImages.add(img));
+
+    // Watch for new images being added
+    const observer = new MutationObserver((mutations, obs) => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            // Check if the added node is a new image
+            const newImages = node.tagName === 'IMG' ? [node] : node.querySelectorAll?.('img') || [];
+            for (const img of newImages) {
+              if (!existingImages.has(img) && !img.dataset.altTextProcessed) {
+                obs.disconnect(); // Stop watching
+                processImage(img);
+                return;
+              }
+            }
+          }
         }
       }
-    }
-  }
+    });
 
-  function findAndProcessNewImage(container) {
-    // Find the most recently added image without alt text
-    const editableArea = container.closest('[contenteditable="true"]') || container;
-    const images = editableArea.querySelectorAll('img:not([data-alt-text-processed])');
+    observer.observe(editableArea, { childList: true, subtree: true });
 
-    for (const img of images) {
-      if (!img.alt && !img.dataset.altTextProcessed) {
-        processImage(img);
-        break; // Process one at a time
-      }
-    }
+    // Stop watching after 3 seconds if no image found
+    setTimeout(() => observer.disconnect(), 3000);
   }
 
   async function processImage(img) {
