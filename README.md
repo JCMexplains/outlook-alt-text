@@ -29,7 +29,7 @@ A Chrome extension that automatically suggests alt text for images you paste int
 1. Open Outlook in your browser (outlook.office.com, outlook.live.com)
 2. Compose a new email
 3. Paste an image (screenshot, copied image, etc.)
-4. A modal will appear with AI-generated alt text
+4. If the image doesn't already have alt text, a modal will appear with AI-generated alt text
 5. Edit if needed and click "Apply Alt Text"
 
 ## Supported Outlook Domains
