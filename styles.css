@@ -1,0 +1,165 @@
+/* Outlook Alt Text Extension - Modal Styles */
+
+.outlook-alt-text-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.outlook-alt-text-modal {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.outlook-alt-text-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.outlook-alt-text-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.outlook-alt-text-error {
+  margin: 8px 0 0;
+  padding: 8px 12px;
+  background: #fde7e9;
+  color: #d13438;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.outlook-alt-text-body {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.outlook-alt-text-preview {
+  margin-bottom: 16px;
+  text-align: center;
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.outlook-alt-text-preview img {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.outlook-alt-text-body label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.outlook-alt-text-body textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.outlook-alt-text-body textarea:focus {
+  outline: none;
+  border-color: #0078d4;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+}
+
+.outlook-alt-text-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.outlook-alt-text-btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.outlook-alt-text-btn:hover {
+  transform: translateY(-1px);
+}
+
+.outlook-alt-text-btn:active {
+  transform: translateY(0);
+}
+
+.outlook-alt-text-btn-primary {
+  background: #0078d4;
+  color: white;
+}
+
+.outlook-alt-text-btn-primary:hover {
+  background: #106ebe;
+}
+
+.outlook-alt-text-btn-secondary {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.outlook-alt-text-btn-secondary:hover {
+  background: #e0e0e0;
+}
+
+/* Loading state */
+.outlook-alt-text-loading {
+  text-align: center;
+  padding: 20px;
+}
+
+.outlook-alt-text-loading p {
+  margin-top: 12px;
+  color: #666;
+  font-size: 14px;
+}
+
+.outlook-alt-text-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #0078d4;
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: outlook-alt-text-spin 0.8s linear infinite;
+}
+
+@keyframes outlook-alt-text-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

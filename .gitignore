@@ -1,0 +1,19 @@
+# Local development
+*.log
+.DS_Store
+Thumbs.db
+
+# Never commit secrets
+.env
+secrets.json
+*.key
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated
+desktop.ini
+ehthumbs.db
