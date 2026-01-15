@@ -70,6 +70,10 @@
   async function processImage(img) {
     // Prevent duplicate processing
     if (processingImage === img || img.dataset.altTextProcessed) return;
+
+    // Skip if image already has alt text
+    if (img.alt && img.alt.trim() !== '') return;
+
     processingImage = img;
     img.dataset.altTextProcessed = 'pending';
 
