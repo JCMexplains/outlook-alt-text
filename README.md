@@ -6,6 +6,7 @@ A Chrome extension that automatically suggests alt text for images you paste int
 
 - Detects images pasted into Outlook compose
 - Generates alt text using Claude AI vision
+- Conditional model selection: uses Haiku (cheaper) for simple images, Sonnet (more powerful) for complex images
 - Smart prompting: concise for simple images, detailed for schedules/tables/text
 - Edit suggestions before applying
 - Skip option if you don't want alt text
@@ -47,8 +48,16 @@ A Chrome extension that automatically suggests alt text for images you paste int
 
 ## Cost
 
-This extension uses the Claude API which has per-request costs. Each image analysis uses approximately:
-- ~0.01-0.05 USD per image (varies by image size)
+This extension uses the Claude API which has per-request costs. To optimize costs, the extension:
+1. First uses Claude Haiku to classify image complexity (very low cost)
+2. For simple images (photos, graphics, icons): uses Haiku for alt text generation (lower cost)
+3. For complex images (charts, tables, text-heavy images): uses Sonnet for accurate transcription (higher cost)
+
+Approximate costs per image:
+- Simple images: ~$0.001-0.003 USD (Haiku classification + Haiku generation)
+- Complex images: ~$0.01-0.05 USD (Haiku classification + Sonnet generation)
+
+This conditional approach can reduce costs by 10-50x for simple images while maintaining quality for complex ones.
 
 See [Anthropic's pricing](https://www.anthropic.com/pricing) for current rates.
 
