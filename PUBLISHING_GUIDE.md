@@ -2,49 +2,6 @@
 
 This guide walks you through publishing Outlook Alt Text to the Chrome Web Store.
 
-## Prerequisites Checklist
-
-### 1. Create Extension Icons (REQUIRED)
-
-You need three icon sizes. Options:
-
-**Option A: Use an online icon generator**
-- Go to https://favicon.io or https://www.canva.com
-- Create a simple icon (suggestions: "Alt" text, accessibility symbol, or image icon)
-- Export as PNG in these sizes:
-  - 16x16 pixels → save as `icons/icon16.png`
-  - 48x48 pixels → save as `icons/icon48.png`
-  - 128x128 pixels → save as `icons/icon128.png`
-
-**Option B: Use AI to generate**
-- Ask ChatGPT/DALL-E or another AI to create an icon
-- Request: "Create a simple, flat icon for an accessibility tool that adds alt text to images"
-- Download and resize to the three sizes above
-
-**Icon Design Tips:**
-- Keep it simple and recognizable at small sizes
-- Use accessibility-friendly colors (high contrast)
-- Consider: "A" letter, image/photo symbol, or eye/accessibility icon
-
-### 2. Take Screenshots (REQUIRED)
-
-Chrome Web Store requires at least 1 screenshot (1280x800 or 640x400):
-
-1. Open Outlook web in Chrome
-2. Load your extension
-3. Paste an image to trigger the alt text modal
-4. Take a screenshot showing:
-   - The modal with suggested alt text
-   - The Outlook compose window
-   - Make it look clean and professional
-
-You'll need 1-5 screenshots total.
-
-### 3. Prepare Promotional Materials (OPTIONAL but recommended)
-
-- **Promotional tile**: 440x280 pixels (shown in search results)
-- **Marquee promo tile**: 1400x560 pixels (featured placement)
-
 ## Step-by-Step Publishing Process
 
 ### Step 1: Create Chrome Web Store Developer Account
@@ -56,29 +13,25 @@ You'll need 1-5 screenshots total.
 
 ### Step 2: Package Your Extension
 
-Run these commands to create a clean ZIP file:
+Run the packaging script:
 
 ```bash
 cd /home/user/outlook-alt-text
-zip -r outlook-alt-text.zip . -x "*.git*" -x "*node_modules*" -x "*.DS_Store" -x "PUBLISHING_GUIDE.md"
+chmod +x package.sh
+./package.sh
 ```
 
-**What to include in ZIP:**
+This creates `outlook-alt-text.zip` with all necessary files.
+
+**What's included:**
 - All .js files (background.js, content.js, popup.js)
 - manifest.json
 - popup.html
 - styles.css
 - icons/ folder with all icons
 - LICENSE
-- README.md (optional but recommended)
+- README.md
 - PRIVACY.md
-
-**What to exclude:**
-- .git folder
-- .gitignore
-- node_modules (if any)
-- PUBLISHING_GUIDE.md
-- Any development/testing files
 
 ### Step 3: Upload to Chrome Web Store
 
@@ -88,8 +41,6 @@ zip -r outlook-alt-text.zip . -x "*.git*" -x "*node_modules*" -x "*.DS_Store" -x
 4. Wait for upload to complete
 
 ### Step 4: Fill Out Store Listing
-
-You'll need to complete these sections:
 
 #### Product Details
 
@@ -151,12 +102,11 @@ Open source on GitHub: https://github.com/JCMexplains/outlook-alt-text
 #### Privacy
 
 **Privacy policy URL:**
-- You'll need to host PRIVACY.md somewhere public
-- Options:
-  - GitHub: `https://github.com/JCMexplains/outlook-alt-text/blob/main/PRIVACY.md`
-  - Or create a simple webpage
+```
+https://github.com/JCMexplains/outlook-alt-text/blob/master/PRIVACY.md
+```
 
-**Single purpose description (brief):**
+**Single purpose description:**
 ```
 This extension analyzes images pasted in Outlook and suggests alt text using AI to improve email accessibility.
 ```
@@ -192,31 +142,31 @@ Required to run the content script that detects image paste events and applies a
 #### Store Listing Assets
 
 1. **Upload screenshots** (at least 1, max 5)
-   - 1280x800 or 640x400 pixels
-   - Show the extension in action
+   - Use the included `screenshot.png` file
+   - Shows the extension in action with the alt text modal
 
 2. **Upload icons**
-   - Small tile: 128x128 (your icon128.png)
+   - Chrome will use the icons from your manifest.json
+   - Small tile: 128x128 (icon128.png)
 
 3. **Optional promotional images**
-   - Promotional tile: 440x280
-   - Marquee: 1400x560
+   - Can create later if needed
 
 #### Distribution
 
 **Visibility:** Public
 
-**Regions:** All regions (or select specific countries)
+**Regions:** All regions
 
 **Pricing:** Free
+
+**Trader/Non-trader:** Select "non-trader" (free hobby project)
 
 ### Step 5: Submit for Review
 
 1. Click **"Submit for Review"**
-2. Review will typically take **1-5 business days**
-3. You'll receive an email when:
-   - Review is complete (approved/rejected)
-   - Extension is published
+2. Review typically takes **1-5 business days**
+3. You'll receive an email when approved
 
 ### Step 6: After Approval
 
@@ -224,40 +174,26 @@ Once approved:
 - Extension will be live on Chrome Web Store
 - Users can install it directly
 - No more developer mode warnings
-- You'll get a public URL like: `https://chrome.google.com/webstore/detail/[your-extension-id]`
-
-## Common Rejection Reasons (And How to Avoid)
-
-1. **Missing privacy policy** → We created PRIVACY.md for you
-2. **Poor screenshots** → Make sure they're high quality and show the extension working
-3. **Unclear description** → Our description is detailed and clear
-4. **Missing icons** → Make sure you create all three icon sizes
-5. **Permission issues** → We've provided justifications above
+- You'll get a public URL
 
 ## Updating Your Extension
 
 When you make changes:
 1. Update version in manifest.json (e.g., 1.0.0 → 1.0.1)
-2. Create new ZIP file
+2. Run `./package.sh` to create new ZIP
 3. Go to Developer Dashboard → Your Extension → "Package"
 4. Upload new ZIP
 5. Click "Submit for Review"
 
 ## Tips for Success
 
-- **Response time:** Respond quickly to any review feedback
-- **Support email:** Add a support email in your listing
-- **Keywords:** Use relevant keywords in your description (accessibility, alt text, Outlook, AI)
-- **Updates:** Keep your extension updated and respond to user reviews
+- **Respond quickly** to any review feedback
+- **Use relevant keywords** in your description
+- **Keep extension updated** and respond to user reviews
+- **Monitor reviews** and fix reported issues
 
 ## Resources
 
 - [Chrome Web Store Developer Documentation](https://developer.chrome.com/docs/webstore/)
 - [Extension Publishing Policies](https://developer.chrome.com/docs/webstore/program-policies/)
 - [Best Practices](https://developer.chrome.com/docs/webstore/best_practices/)
-
-## Need Help?
-
-- Check the Chrome Web Store Developer Dashboard for review status
-- Review rejection emails will include specific issues to fix
-- GitHub issues: https://github.com/JCMexplains/outlook-alt-text/issues
