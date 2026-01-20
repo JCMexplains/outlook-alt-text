@@ -17,3 +17,6 @@ secrets.json
 # OS generated
 desktop.ini
 ehthumbs.db
+
+# Packaged extension
+*.zip
