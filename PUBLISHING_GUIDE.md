@@ -118,11 +118,6 @@ For **"storage"** permission:
 Required to securely store the user's Claude API key locally in Chrome's storage for authenticating API requests.
 ```
 
-For **"activeTab"** permission:
-```
-Required to detect when images are pasted into Outlook compose windows and to apply alt text to those images.
-```
-
 For **host permissions** (outlook.office.com, etc.):
 ```
 Required to run the content script that detects image paste events and applies alt text on Outlook web domains.
